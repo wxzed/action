@@ -132,11 +132,6 @@ jobs:
 
       - name: Generate compile_commands.json
         run: | 
-          if [ ! -d "src" ]; then
-            echo "Creating src directory..."
-            mkdir src
-          fi
-          find . -type f \( -name "*.cpp" -o -name "*.h" \) -exec mv {} src/ \;
           pio run -t compiledb
 
       - name: Run clang-tidy
