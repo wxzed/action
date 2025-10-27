@@ -53,7 +53,7 @@ const-rgx=(_?[A-Z][A-Z0-9_]{2,50}|__.*__)$
 logging-modules=logging
 
 [VARIABLES]
-good-names=i,j,k,ex,Run,_  # 默认的一些短变量名称
+good-names=i,j,k,ex,Run,_               # 默认的一些短变量名称
 
 [TYPECHECK]
 ignored-classes=optparse.Values
