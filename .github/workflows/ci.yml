@@ -89,8 +89,15 @@ jobs:
       - name: Check out code from GitHub
         uses: actions/checkout@v5.0.0           ##检查代码
 
+      - name: Check out wxzed/action for shared configs
+        uses: actions/checkout@v5.0.0
+        with:
+          repository: wxzed/action
+          ref: main
+          path: .action
+
       - name: Restore Python 3                ## 还原 Python 3 环境
-        uses: ./.github/actions
+        uses: wxzed/action/.github/actions@main
         with:
           python-version: ${{ env.PYTHON_3 }}
           cache-key: ${{ needs.common.outputs.cache-key }}
@@ -107,7 +114,7 @@ jobs:
             exit 0
           fi
 
-          pylint  -f parseable --rcfile=./.github/config/.pylintrc --persistent=n $FILES || true  ##运行 pylint 检查代码规范
+          pylint  -f parseable --rcfile=.action/.github/config/.pylintrc --persistent=n $FILES || true  ##运行 pylint 检查代码规范
         if: always()
       - name: Suggested changes
         run: |
@@ -135,8 +142,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5.0.0
 
+      - name: Check out wxzed/action for shared configs
+        uses: actions/checkout@v5.0.0
+        with:
+          repository: wxzed/action
+          ref: main
+          path: .action
+
       - name: Restore Python 3
-        uses: ./.github/actions
+        uses: wxzed/action/.github/actions@main
         with:
           python-version: ${{ env.PYTHON_3 }}
           cache-key: ${{ needs.common.outputs.cache-key }}
@@ -145,7 +159,7 @@ jobs:
       - name: Install PlatformIO
         run: | 
           pip install platformio
-          cp ./.github/config/platformio.ini .
+          cp ./.action/.github/config/platformio.ini .
 
       - name: Generate compile_commands.json
         run: | 
@@ -165,7 +179,7 @@ jobs:
           fi
           clang-tidy $FILES -p . \
           -header-filter="$filter" \
-          -config-file=./.github/config/.clang-tidy \
+          -config-file=.action/.github/config/.clang-tidy \
           || false
         if: always()
 
